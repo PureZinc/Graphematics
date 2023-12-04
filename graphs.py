@@ -147,4 +147,4 @@ print(pet_adj)
 print(pet_deg)
 print(pet_lap)
 print(pet.distance_polynomial(1))
-print(pet.distance_distribution(1))
+

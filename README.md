@@ -19,8 +19,8 @@ Graphematics is a Python-based application developed using the Tkinter library. 
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/graphematics.git
-    cd graphematics
+    git clone https://github.com/PureZinc/Graphematics.git
+    cd Graphematics
     ```
 
 2. Install dependencies (if any):

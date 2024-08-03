@@ -1,12 +1,14 @@
 import tkinter as tk
+from tkinter import messagebox, simpledialog
 from backend.definitions import Graph, Vertex
 from backend.utils import generate_random_id
 
-class Graphematics:
+
+class GraphBuilder:
     def __init__(self, root):
         self.root = root
-        self.root.title("Graphematics")
-        self.graph = Graph("Graph1")
+        self.graph = Graph("Graphematics")
+        self.root.title(self.graph.name)
 
         self.current_state = 'add_vertex'
         self.selected_vertex = None
@@ -14,7 +16,7 @@ class Graphematics:
         self.add_vertex_button = tk.Button(self.root, text="Add Vertex", command=lambda: self.set_state('add_vertex'))
         self.add_edge_button = tk.Button(self.root, text="Add Edge", command=lambda: self.set_state('add_edge'))
         self.move_vertex_button = tk.Button(self.root, text="Move Vertex", command=lambda: self.set_state('move_vertex'))
-        self.delete_button = tk.Button(self.root, text="Delete (Unfinished)", command=lambda: self.set_state('delete'))
+        self.delete_button = tk.Button(self.root, text="Delete", command=lambda: self.set_state('delete'))
         self.states = {
             'add_vertex': {
                 'name': "Add Vertex",
@@ -41,7 +43,7 @@ class Graphematics:
         self.setup_ui()
         self.bind_canvas_events()
     
-    # Internal
+    # State Functions
     def _add_vertex(self, x, y):
         vertex_id = generate_random_id()
         if vertex_id and vertex_id not in self.graph.vertices:
@@ -68,7 +70,6 @@ class Graphematics:
     def _delete_vertex(self, x, y):
         vertex = self.find_vertex_by_position(x, y)
         self.graph.remove_vertex(vertex)
-        print(self.graph.__repr__())
         self.update_edges()
     
     # External   
@@ -78,7 +79,17 @@ class Graphematics:
 
         for data in self.states.values():
             data['element'].pack()
+        
+        self.distance_distribution = tk.Button(
+            self.root, text="Distance Distribution",
+            command=lambda: self.show_solution_box(f"The Distance Distribution is: {self.graph.distance_distribution(self.selected_vertex)}")
+        )
+        self.distance_distribution.pack()
 
+        self.export_graph = tk.Button(self.root, bg="pink", text="Export Graph", command=self.export_new_graph)
+        self.import_graph = tk.Button(self.root, bg="pink",text="Import Graph", command=self.import_new_graph)
+        self.import_graph.pack()
+        self.export_graph.pack()
         self.update_button_colors()
     
     def find_vertex(self, x, y, radius=10):
@@ -93,26 +104,6 @@ class Graphematics:
                 return vertex
         return None
     
-    def set_state(self, state):
-        self.current_state = state
-        self.update_button_colors()
-    
-    def update_button_colors(self):
-        for state, data in self.states.items():
-            data['element'].config(bg='grey' if self.current_state == state else 'white')
-
-    def bind_canvas_events(self):
-        self.canvas.bind("<Button-1>", self.on_canvas_click)
-        self.canvas.bind("<B1-Motion>", self.on_canvas_drag)
-
-    def on_canvas_click(self, event):
-        for state, data in self.states.items():
-            if self.current_state == state:
-                data['method'](event.x, event.y)
-    def on_canvas_drag(self, event):
-        if self.current_state == 'move_vertex' and self.selected_vertex:
-            self._move_vertex(event.x, event.y)
-    
     def select_vertex(self, x, y):
         if self.selected_vertex:
             self.selected_vertex.set_selected(False)
@@ -124,6 +115,25 @@ class Graphematics:
         else:
             self.selected_vertex = None
 
+    def set_state(self, state):
+        self.current_state = state
+        self.update_button_colors()
+
+    def bind_canvas_events(self):
+        self.canvas.bind("<Button-1>", self.on_canvas_click)
+        self.canvas.bind("<B1-Motion>", self.on_canvas_drag)
+    def on_canvas_click(self, event):
+        for state, data in self.states.items():
+            if self.current_state == state:
+                data['method'](event.x, event.y)
+    def on_canvas_drag(self, event):
+        if self.current_state == 'move_vertex' and self.selected_vertex:
+            self._move_vertex(event.x, event.y)
+
+    # UI Methods
+    def update_button_colors(self):
+        for state, data in self.states.items():
+            data['element'].config(bg='grey' if self.current_state == state else 'white')
 
     def draw_edge(self, start_vertex, end_vertex):
         x1, y1 = start_vertex.x, start_vertex.y
@@ -145,9 +155,39 @@ class Graphematics:
                     raise ValueError(f"End vertex {end_label} isn't in the graph.")
                 
                 self.draw_edge(start_vertex, end_vertex)
+    
+    # Box Methods
+    def show_solution_box(self, text):
+        messagebox.showinfo("Info", text)
 
+    def export_new_graph(self):
+        text = simpledialog.askstring("Export Graph", "Name your Graph:")
+        self.graph.name = text
+        self.graph.export_graph_data(filename=text)
+    
+    def import_new_graph(self):
+        filename = simpledialog.askstring("Import Graph", "Search Graph by Name:")
+        if not filename:
+            return None
+        
+        for class_name, class_val in self.graph.classes.items():
+            self.graph.clear()
+            if filename == class_name:
+                name = class_val["name"]
+                params = class_val["params"]
+                func = class_val["function"]
+                func_params = []
+                for param in params:
+                    ask = simpledialog.askinteger(name, f"Choose {param}:")
+                    func_params.append(ask)
+                func(self.canvas, *func_params)
+                self.update_edges()
+                return None
+            
+        self.graph.import_graph_data(filename, self.canvas)
+        self.update_edges()
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = Graphematics(root)
+    app = GraphBuilder(root)
     root.mainloop()

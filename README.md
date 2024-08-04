@@ -4,9 +4,9 @@ Graphematics is a Python-based application developed using the Tkinter library. 
 
 ## Features
 
-- **Interactive Graph Visualization**: Create and edit nodes and edges in a graphical interface.
-- **Graph Algorithms**: Implement and visualize various graph algorithms such as BFS, DFS, Dijkstra's algorithm, and more.
-- **Customization Options**: Customize the appearance of nodes and edges.
+- **Interactive Graph Visualization**: Create, edit, and delete nodes and edges in a graphical interface.
+- **Graph Algorithms**: Implement and visualize various graph algorithms such as BFS (DFS, Dijkstra's algorithm, and more coming soon).
+- **Customization Options**: Customize the appearance of nodes and edges (Coming soon).
 - **Save and Load Graphs**: Save your graphs to a file and load them later for further analysis.
 - **Educational Tools**: Step-by-step execution of algorithms with visual representation to aid learning.
 
@@ -14,6 +14,7 @@ Graphematics is a Python-based application developed using the Tkinter library. 
 
 - Python 3.x
 - Tkinter (usually included with Python installations)
+- Numpy
 
 ## Installation
 

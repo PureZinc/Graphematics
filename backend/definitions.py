@@ -13,8 +13,19 @@ def generate_random_id(length=8):
     random_id = ''.join(random.choices(characters, k=length))
     return random_id
 
+
+def get_data_path(filename):
+    directory = './storage'
+    unique_filename = f"{filename}.json"
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    return os.path.join(directory, unique_filename)
+
+
+
+
 class Vertex:
-    def __init__(self, canvas, x, y, id=None, radius=10, color='blue', label=None):
+    def __init__(self, canvas, x, y, id=None, radius=10, color='black', labels=[]):
         self.canvas = canvas
         self.id = id if id else generate_random_id()
         self.x = x
@@ -23,7 +34,7 @@ class Vertex:
         self.color = color
 
         self.vertex_id = self.draw_vertex()
-        self.label = label
+        self.labels = labels
 
     def draw_vertex(self):
         return self.canvas.create_oval(
@@ -50,9 +61,22 @@ class Vertex:
 
     def set_selected(self, selected):
         if selected:
-            self.update_color('red')
+            self.canvas.itemconfig(self.vertex_id, outline='red', width=3)
         else:
-            self.update_color('blue')
+            self.canvas.itemconfig(self.vertex_id, outline='black', width=1)
+
+    def add_label(self, label, overwrite=True):
+        if overwrite:
+            self.labels = []
+        self.labels.append(label)
+        self.update_labels()
+    
+    def update_labels(self):
+        for label in self.labels:
+            self.update_color(label)
+    
+    def get_position(self):
+        return (self.x, self.y)
 
 
 class Graph:
@@ -96,14 +120,25 @@ class Graph:
         return None
     def get_vertex_by_label(self, label) -> Vertex:
         for vertex in self.vertices:
-            if vertex.label == label:
+            if label in vertex.labels:
                 return vertex
         return None
+    def get_vertices_by_label(self, label) -> Vertex:
+        vertices = []
+        for vertex in self.vertices:
+            if label in vertex.labels:
+                vertices.append(vertex)
+        return vertices
+    def get_neighbors(self, vertex: Vertex):
+        neighbors = []
+        for neighbor_id in self.edges[vertex.id]:
+            neighbor = self.get_vertex_by_id(neighbor_id)
+            neighbors.append(neighbor)
+        return neighbors
     
     def remove_all_labels(self):
         for vertex in self.vertices:
-            if vertex.label:
-                vertex.label = None
+            vertex.labels = []
     
     def create_vertex(self, vertex: Vertex):
         if vertex.id in self.vertices:
@@ -150,22 +185,19 @@ class Graph:
                 'vertex_id': {
                     'neighbors': [vertices],
                     'position': (x, y),
-                    'label': any
+                    'labels': [any]
                 }
             }
         """
         self.clear()
         self.name = filename
-
-        directory = './storage'
-        if not os.path.exists(directory):
-            os.makedirs(directory)
-        with open(os.path.join(directory, f'{filename}.json'), 'r') as graph_file:
-            data = json.load(graph_file)
-
+        path = get_data_path(filename)
+        with open(path, 'r') as graph_data:
+            data = json.load(graph_data)
+        
         for vertex_id, vertex_data in data.items():
             self.edges[vertex_id] = vertex_data['neighbors']
-            vertex = Vertex(canvas, *vertex_data['position'], id=vertex_id)
+            vertex = Vertex(canvas, *vertex_data['position'], id=vertex_id, labels=vertex_data['labels'])
             self.vertices.append(vertex)
 
     def export_graph_data(self, filename='graph_data'):
@@ -177,14 +209,11 @@ class Graph:
             vertex_data = {}
             vertex_data['neighbors'] = self.edges[vertex.id]
             vertex_data['position'] = (vertex.x, vertex.y)
+            vertex_data['labels'] = vertex.labels
             data[vertex.id] = vertex_data
         
-        timestamp = time.strftime("%Y%m%d-%H%M%S") #Use this for unique storage
-        unique_filename = f'{filename}.json'
-        directory = './storage'
-        if not os.path.exists(directory):
-            os.makedirs(directory)
-        with open(os.path.join(directory, unique_filename), 'w') as graph_file:
+        path = get_data_path(filename)
+        with open(os.path.join(path), 'w') as graph_file:
             json.dump(data, graph_file, indent=4)
         return data
     
@@ -195,7 +224,7 @@ class Graph:
         angle_increment = 2 * math.pi / nodes
         for i in range(nodes):
             location = (center[0] + radius * math.cos(i * angle_increment), center[1] + radius * math.sin(i * angle_increment))
-            vertex = Vertex(canvas, *location, label=bump + i)
+            vertex = Vertex(canvas, *location, labels=[bump + i])
             self.create_vertex(vertex)
         
         for i in range(nodes):
@@ -216,10 +245,10 @@ class Graph:
     def _wheel_graph(self, canvas, n):
         center = (canvas.winfo_width() / 2, canvas.winfo_height() / 2)
         self._cyclic_graph(canvas, n)
-        center_vertex = Vertex(canvas, *center, label="center")
+        center_vertex = Vertex(canvas, *center, labels=["center"])
         self.create_vertex(center_vertex)
         for v in self.vertices:
-            if v.label != "center":
+            if "center" not in v.labels:
                 self.create_edge(center_vertex, v)
         self.remove_all_labels()
     
@@ -228,14 +257,36 @@ class Graph:
         angle_increment = 2 * math.pi / nodes
         for i in range(nodes):
             location = (center[0] + radius * math.cos(i * angle_increment), center[1] + radius * math.sin(i * angle_increment))
-            vertex = Vertex(canvas, *location, label=i)
+            vertex = Vertex(canvas, *location, labels=[i])
             self.create_vertex(vertex)
         for v1 in self.vertices:
             for v2 in self.vertices:
-                if v1.label < v2.label:
+                if v1.labels[0] < v2.labels[0]:
                     self.create_edge(v1, v2)
         if remove_labels:
             self.remove_all_labels()
+    
+
+    # Graph Functions
+    def line_graph(self):
+        old_edges = list(self.edges.items())
+        for vertex_id, neighbors in old_edges:
+            vertex = self.get_vertex_by_id(vertex_id)
+            for neighbor in neighbors:
+                neighbor = self.get_vertex_by_id(neighbor)
+                midpoint = ((vertex.x + neighbor.x)/2, (vertex.y + neighbor.y)/2)
+                add_vertex = Vertex(vertex.canvas, *midpoint, labels=[vertex.id, neighbor.id])
+                self.create_vertex(add_vertex)
+            self.remove_vertex(vertex)
+        for vertex in self.vertices:
+            neighbors = self.get_vertices_by_label(vertex.labels[0])
+            neighbors.extend(self.get_vertices_by_label(vertex.labels[1]))
+            for neighbor in neighbors:
+                try:
+                    self.create_edge(vertex, neighbor)
+                except ValueError:
+                    continue
+        self.remove_all_labels()
 
 
     # Important Functions

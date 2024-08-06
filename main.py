@@ -16,6 +16,7 @@ class GraphBuilder:
         self.add_vertex_button = tk.Button(self.root, text="Add Vertex", command=lambda: self.set_state('add_vertex'))
         self.add_edge_button = tk.Button(self.root, text="Add Edge", command=lambda: self.set_state('add_edge'))
         self.move_vertex_button = tk.Button(self.root, text="Move Vertex", command=lambda: self.set_state('move_vertex'))
+        self.color_vertex_button = tk.Button(self.root, text="Color Vertex", command=lambda: self.set_state('color_vertex'))
         self.delete_button = tk.Button(self.root, text="Delete", command=lambda: self.set_state('delete'))
         self.states = {
             'add_vertex': {
@@ -32,6 +33,11 @@ class GraphBuilder:
                 'name': "Move Vertex",
                 'method': self.select_vertex,
                 'element': self.move_vertex_button
+            },
+            'color_vertex': {
+                'name': "Label Vertex",
+                'method': self._color_vertex,
+                'element': self.color_vertex_button
             },
             'delete': {
                 'name': "Delete",
@@ -67,6 +73,16 @@ class GraphBuilder:
             self.selected_vertex.update_position(x, y)
             self.update_edges()
     
+    def _color_vertex(self, x, y):
+        vertex = self.find_vertex_by_position(x, y)
+        ask = simpledialog.askstring("Label Vertex", f"Choose color:")
+        neighbors = self.graph.get_neighbors(vertex)
+        for neighbor in neighbors:
+            if ask in neighbor.labels:
+                return messagebox.askretrycancel("Miscoloring", "Seems like that vertex is already colored that!")
+        vertex.add_label(ask)
+        self.update_edges()
+    
     def _delete_vertex(self, x, y):
         vertex = self.find_vertex_by_position(x, y)
         self.graph.remove_vertex(vertex)
@@ -85,13 +101,20 @@ class GraphBuilder:
             command=lambda: self.show_solution_box(f"The Distance Distribution is: {self.graph.distance_distribution(self.selected_vertex)}")
         )
         self.distance_distribution.pack()
-
+        self.line_graph_button = tk.Button(self.root, text="Line Graph", command=self._line_graph)
         self.export_graph = tk.Button(self.root, bg="pink", text="Export Graph", command=self.export_new_graph)
         self.import_graph = tk.Button(self.root, bg="pink",text="Import Graph", command=self.import_new_graph)
+        self.line_graph_button.pack()
         self.import_graph.pack()
         self.export_graph.pack()
         self.update_button_colors()
-    
+
+    def _line_graph(self):
+        ask = messagebox.askokcancel("Line Graph", "Perform Line Graph?")
+        if ask:
+            self.graph.line_graph()
+            self.update_edges()
+
     def find_vertex(self, x, y, radius=10):
         for vertex in self.graph.vertices:
             if (vertex.x - radius <= x <= vertex.x + radius) and (vertex.y - radius <= y <= vertex.y + radius):
@@ -144,6 +167,7 @@ class GraphBuilder:
         self.canvas.delete("all")
         for vertex in self.graph.vertices:
             vertex.vertex_id = vertex.draw_vertex()
+            vertex.update_labels()
         for start_label, end_labels in self.graph.edges.items():
             start_vertex = self.graph.get_vertex_by_id(start_label)
             if not start_vertex:

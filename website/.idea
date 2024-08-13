@@ -1,0 +1,5 @@
+We're building a website for sharing and describing different graphs.
+This website uses the same database as the Graphematics app, which would most likely be Neo4j.
+The most efficient database for our project would be very necessary!
+Also, still decisive on what framework to use for our project.
+We were thinking Flask for it's flexibility. Other frameworks would be accepted.

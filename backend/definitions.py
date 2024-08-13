@@ -21,7 +21,20 @@ def get_data_path(filename):
         os.makedirs(directory)
     return os.path.join(directory, unique_filename)
 
-
+def int_to_color(integer):
+    colorize = {
+        "0": "blue",
+        "1": "red",
+        "2": "green",
+        "3": "yellow",
+        "4": "purple",
+        "5": "orange",
+        "6": "pink",
+        "7": "brown",
+        "8": "gray",
+        "9": "cyan"
+    }
+    return colorize.get(str(integer%10), "black")
 
 
 class Vertex:
@@ -32,6 +45,7 @@ class Vertex:
         self.y = y
         self.radius = radius
         self.color = color
+        self.selected = False
 
         self.vertex_id = self.draw_vertex()
         self.labels = labels
@@ -41,6 +55,12 @@ class Vertex:
             self.x - self.radius, self.y - self.radius,
             self.x + self.radius, self.y + self.radius,
             fill=self.color
+        )
+    
+    def draw_int_label(self, label: int, color='white'):
+        self.canvas.create_text(
+            self.x, self.y,
+            text=label, fill=color
         )
 
     def update_position(self, x, y):
@@ -53,14 +73,14 @@ class Vertex:
         self.canvas.coords(self.x, self.y)
 
     def update_color(self, color):
+        self.canvas.itemconfig(self.vertex_id, fill=color)
         self.color = color
-        self.canvas.itemconfig(self.vertex_id, fill=self.color)
 
     def contains_point(self, x, y):
         return (self.x - self.radius <= x <= self.x + self.radius) and (self.y - self.radius <= y <= self.y + self.radius)
 
-    def set_selected(self, selected):
-        if selected:
+    def set_selected(self):
+        if self.selected:
             self.canvas.itemconfig(self.vertex_id, outline='red', width=3)
         else:
             self.canvas.itemconfig(self.vertex_id, outline='black', width=1)
@@ -73,7 +93,10 @@ class Vertex:
     
     def update_labels(self):
         for label in self.labels:
-            self.update_color(label)
+            try:
+                self.update_color(label)
+            except Exception:
+                self.draw_int_label(label)
     
     def get_position(self):
         return (self.x, self.y)
@@ -107,6 +130,11 @@ class Graph:
                 "name": "Wheel Graph",
                 "params": ["outer node number"],
                 "function": self._wheel_graph
+            },
+            "bicomplete": {
+                "name": "Bipartite Complete Graph",
+                "params": ["parameter 1", "parameter 2"],
+                "function": self._complete_bipartite_graph
             },
         }
     
@@ -155,12 +183,12 @@ class Graph:
         del self.edges[vertex.id]
             
 
-    def create_edge(self, v1, v2):
+    def create_edge(self, v1: Vertex, v2: Vertex):
         if v1 not in self.vertices or v2 not in self.vertices:
             raise ValueError("Both vertices must be in the graph")
         if self.simple:
             if v2.id in self.edges[v1.id] or v1.id in self.edges[v2.id]:
-                raise ValueError("Edge already exists in graph.")
+                return ValueError("Edge already exists in graph.")
             if v1 == v2:
                 raise ValueError("Vertex can not share the same vertex.")
         self.edges[v1.id].append(v2.id)
@@ -174,7 +202,10 @@ class Graph:
                 self.edges[v2.id].remove(v1.id)
         else:
             raise ValueError("Both vertices must be in the graph")
-        
+    
+    def degrees(self):
+        return [len(neighbors) for neighbors in self.edges.values()]
+    
     def clear(self):
         self.vertices = []
         self.edges = {}
@@ -266,6 +297,28 @@ class Graph:
         if remove_labels:
             self.remove_all_labels()
     
+    def _complete_bipartite_graph(self, canvas, nodes1, nodes2, gap=100):
+        width = canvas.winfo_width()
+        middle = canvas.winfo_height()/2
+        tops = []
+        bottoms = []
+        for i in range(nodes1 + nodes2):
+            if i < nodes1:
+                x = i * (width/(nodes1 + 1)) + (width/(nodes1 + 1))
+                y = middle + gap/2
+                vertex = Vertex(canvas, x, y)
+                self.create_vertex(vertex)
+                tops.append(vertex)
+            else:
+                x = (i - nodes1) * (width/(nodes2 + 1)) + (width/(nodes2 + 1))
+                y = middle - gap/2
+                vertex = Vertex(canvas, x, y)
+                self.create_vertex(vertex)
+                bottoms.append(vertex)
+        for vertex1 in tops:
+            for vertex2 in bottoms:
+                self.create_edge(vertex1, vertex2)
+
 
     # Graph Functions
     def line_graph(self):
@@ -287,6 +340,12 @@ class Graph:
                 except ValueError:
                     continue
         self.remove_all_labels()
+    
+    def label_by_bfs(self, vertex: Vertex, colorize=True):
+        set_labels = self.bfs_algorithm(vertex)
+        for vert in self.vertices:
+            label = int_to_color(set_labels[vert.id]) if colorize else set_labels[vert.id]
+            vert.add_label(label, overwrite=False)
 
 
     # Important Functions

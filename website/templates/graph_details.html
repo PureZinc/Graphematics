@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Graph: {{ graph_name }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">{{ graph_name }} Details</h1>
+    <div class="row text-center">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="card-title">{{ graph_name }}</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="graphCanvas" width="500" height="400"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="card-title">Graph Information</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item"><strong>Vertices:</strong> {{ num_vertices }}</li>
+                        <li class="list-group-item"><strong>Edges:</strong> {{ num_edges }}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="card-title">Isomorphic to:</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item"><strong>Description: </strong>{{ description }}</li>
+                        <li class="list-group-item"><strong>Chromatic Number: </strong>3</li>
+                        <li class="list-group-item"><strong>Automorphisms: </strong>120</li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item"><strong>Snark</strong></li>
+                        <li class="list-group-item"><strong>Vertex-Transitive</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src={{ url_for('static', filename='draw_graph.js') }}></script>
+<script>
+    const graphDetails = {{ graph_details | tojson }};
+    drawGraph('graphCanvas', graphDetails);
+</script>
+{% endblock %}

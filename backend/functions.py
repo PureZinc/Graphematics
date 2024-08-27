@@ -1,23 +1,4 @@
 from .definitions import Vertex, Graph
-from .utils import generate_random_id
-from itertools import permutations
-
-
-def check_isomorphism(graph1: Graph, graph2: Graph):
-    if sorted(graph1.degrees()) != sorted(graph2.degrees()):
-        return False
-
-    vertices1 = list(graph1.edges.keys())
-    vertices2 = list(graph2.edges.keys())
-
-    for perm in permutations(vertices2):
-        mapping = dict(zip(vertices1, perm))
-        if all(
-            set(graph1.edges[v1]) == set(mapping[v2] for v2 in graph2.edges[mapping[v1]])
-            for v1 in vertices1
-        ):
-            return True
-    return False
 
 def cartesian_product(canvas, graph1: Graph, graph2: Graph):
     new_graph = Graph(f"Cartesian: {graph1.name} x {graph2.name}")

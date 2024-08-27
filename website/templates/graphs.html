@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Graphematics: Graphs{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">All Graphs</h1>
+
+    <!-- Search Bar -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <form method="GET" action="#">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for a graph..." name="query" value="{{ request.args.get('query', '') }}">
+                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Graph Cards -->
+    <div class="row">
+        {% for graph in graphs %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="card-title">{{ graph }}</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="graphCanvas{{ loop.index }}"></canvas>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="{{ url_for('graph_detail', graph_name=graph) }}" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<script src={{ url_for('static', filename='draw_graph.js') }}></script>
+<script>
+    {% for graph_details in graphs.values() %}
+    const graphDetails{{ loop.index }} = {{ graph_details | tojson }};
+    drawGraph('graphCanvas{{ loop.index }}', graphDetails{{ loop.index }}, radius=2, edgeThickness=1);
+    {% endfor %}
+</script>
+{% endblock %}

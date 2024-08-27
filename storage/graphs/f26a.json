@@ -1,0 +1,314 @@
+{
+    "7NpRL2mj": {
+        "neighbors": [
+            "7oMyNXtw",
+            "9DC7IMcq",
+            "9OR9WAWF"
+        ],
+        "position": [
+            352.0,
+            202.0
+        ],
+        "labels": []
+    },
+    "7oMyNXtw": {
+        "neighbors": [
+            "7NpRL2mj",
+            "7K8bGlRM",
+            "Aw4KsgR2"
+        ],
+        "position": [
+            349.0941817426052,
+            225.9315664287558
+        ],
+        "labels": []
+    },
+    "7K8bGlRM": {
+        "neighbors": [
+            "7oMyNXtw",
+            "fr6aYre6",
+            "yvPZ0tfK"
+        ],
+        "position": [
+            340.545602565321,
+            248.47231720437685
+        ],
+        "labels": []
+    },
+    "fr6aYre6": {
+        "neighbors": [
+            "7K8bGlRM",
+            "ns1l66Vd",
+            "nXhUYmUW"
+        ],
+        "position": [
+            326.8510748171101,
+            268.31226582407953
+        ],
+        "labels": []
+    },
+    "ns1l66Vd": {
+        "neighbors": [
+            "fr6aYre6",
+            "6FfNNglI",
+            "HVP2U62P"
+        ],
+        "position": [
+            308.8064746731156,
+            284.29838658936563
+        ],
+        "labels": []
+    },
+    "6FfNNglI": {
+        "neighbors": [
+            "ns1l66Vd",
+            "zlH9C1Ec",
+            "3oegm62f"
+        ],
+        "position": [
+            287.4604887042536,
+            295.5016242685415
+        ],
+        "labels": []
+    },
+    "zlH9C1Ec": {
+        "neighbors": [
+            "6FfNNglI",
+            "9OR9WAWF",
+            "NkVw9gv2"
+        ],
+        "position": [
+            264.0536680255323,
+            301.27088740980537
+        ],
+        "labels": []
+    },
+    "9OR9WAWF": {
+        "neighbors": [
+            "zlH9C1Ec",
+            "nGXw8lle",
+            "7NpRL2mj"
+        ],
+        "position": [
+            239.9463319744677,
+            301.27088740980537
+        ],
+        "labels": []
+    },
+    "nGXw8lle": {
+        "neighbors": [
+            "9OR9WAWF",
+            "yvPZ0tfK",
+            "8pSgIzCm"
+        ],
+        "position": [
+            216.53951129574645,
+            295.5016242685415
+        ],
+        "labels": []
+    },
+    "yvPZ0tfK": {
+        "neighbors": [
+            "nGXw8lle",
+            "s4opGEdA",
+            "7K8bGlRM"
+        ],
+        "position": [
+            195.1935253268844,
+            284.29838658936563
+        ],
+        "labels": []
+    },
+    "s4opGEdA": {
+        "neighbors": [
+            "yvPZ0tfK",
+            "HVP2U62P",
+            "SXtTpdvw"
+        ],
+        "position": [
+            177.1489251828899,
+            268.31226582407953
+        ],
+        "labels": []
+    },
+    "HVP2U62P": {
+        "neighbors": [
+            "s4opGEdA",
+            "GqDXYrjD",
+            "ns1l66Vd"
+        ],
+        "position": [
+            163.45439743467904,
+            248.47231720437685
+        ],
+        "labels": []
+    },
+    "GqDXYrjD": {
+        "neighbors": [
+            "HVP2U62P",
+            "NkVw9gv2",
+            "xUOTYEle"
+        ],
+        "position": [
+            154.9058182573948,
+            225.93156642875581
+        ],
+        "labels": []
+    },
+    "NkVw9gv2": {
+        "neighbors": [
+            "GqDXYrjD",
+            "0MR0aE5Q",
+            "zlH9C1Ec"
+        ],
+        "position": [
+            152.0,
+            202.0
+        ],
+        "labels": []
+    },
+    "0MR0aE5Q": {
+        "neighbors": [
+            "NkVw9gv2",
+            "8pSgIzCm",
+            "1vR0n55r"
+        ],
+        "position": [
+            154.9058182573948,
+            178.06843357124427
+        ],
+        "labels": []
+    },
+    "8pSgIzCm": {
+        "neighbors": [
+            "0MR0aE5Q",
+            "wSv252lF",
+            "nGXw8lle"
+        ],
+        "position": [
+            163.454397434679,
+            155.52768279562315
+        ],
+        "labels": []
+    },
+    "wSv252lF": {
+        "neighbors": [
+            "8pSgIzCm",
+            "SXtTpdvw",
+            "sLTmCT0q"
+        ],
+        "position": [
+            177.14892518288985,
+            135.6877341759205
+        ],
+        "labels": []
+    },
+    "SXtTpdvw": {
+        "neighbors": [
+            "wSv252lF",
+            "FZeO0aDS",
+            "s4opGEdA"
+        ],
+        "position": [
+            195.1935253268844,
+            119.70161341063437
+        ],
+        "labels": []
+    },
+    "FZeO0aDS": {
+        "neighbors": [
+            "SXtTpdvw",
+            "xUOTYEle",
+            "9DC7IMcq"
+        ],
+        "position": [
+            216.53951129574642,
+            108.49837573145852
+        ],
+        "labels": []
+    },
+    "xUOTYEle": {
+        "neighbors": [
+            "FZeO0aDS",
+            "Aw4KsgR2",
+            "GqDXYrjD"
+        ],
+        "position": [
+            239.94633197446765,
+            102.7291125901946
+        ],
+        "labels": []
+    },
+    "Aw4KsgR2": {
+        "neighbors": [
+            "xUOTYEle",
+            "1vR0n55r",
+            "7oMyNXtw"
+        ],
+        "position": [
+            264.05366802553226,
+            102.72911259019459
+        ],
+        "labels": []
+    },
+    "1vR0n55r": {
+        "neighbors": [
+            "Aw4KsgR2",
+            "nXhUYmUW",
+            "0MR0aE5Q"
+        ],
+        "position": [
+            287.4604887042536,
+            108.49837573145852
+        ],
+        "labels": []
+    },
+    "nXhUYmUW": {
+        "neighbors": [
+            "1vR0n55r",
+            "sLTmCT0q",
+            "fr6aYre6"
+        ],
+        "position": [
+            308.80647467311553,
+            119.70161341063434
+        ],
+        "labels": []
+    },
+    "sLTmCT0q": {
+        "neighbors": [
+            "nXhUYmUW",
+            "3oegm62f",
+            "wSv252lF"
+        ],
+        "position": [
+            326.8510748171101,
+            135.68773417592047
+        ],
+        "labels": []
+    },
+    "3oegm62f": {
+        "neighbors": [
+            "sLTmCT0q",
+            "9DC7IMcq",
+            "6FfNNglI"
+        ],
+        "position": [
+            340.54560256532096,
+            155.5276827956231
+        ],
+        "labels": []
+    },
+    "9DC7IMcq": {
+        "neighbors": [
+            "3oegm62f",
+            "7NpRL2mj",
+            "FZeO0aDS"
+        ],
+        "position": [
+            349.0941817426052,
+            178.06843357124413
+        ],
+        "labels": []
+    }
+}

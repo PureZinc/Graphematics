@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}Graphematics{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <h1>Welcome to Graphematics!</h1>
+    <a class="btn btn-primary m-5" href="{{ url_for('graph_page') }}">Explore Graphs</a>
+</div>
+{% endblock %}

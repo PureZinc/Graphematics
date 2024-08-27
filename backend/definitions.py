@@ -2,10 +2,10 @@ from collections import deque
 import numpy as np
 import json
 import random
-import time
 import string
 import os
 import math
+from itertools import permutations
 
 
 def generate_random_id(length=8):
@@ -35,7 +35,6 @@ def int_to_color(integer):
         "9": "cyan"
     }
     return colorize.get(str(integer%10), "black")
-
 
 class Vertex:
     def __init__(self, canvas, x, y, id=None, radius=10, color='black', labels=[]):
@@ -377,3 +376,31 @@ class Graph:
             distance_histogram = np.array([])
             bins = np.array([])
         return distance_histogram
+
+
+class GraphIsomorphism:
+    def __init__(self, name="", description=""):
+        self.name = name
+        self.description = description
+        self.edges = {}
+
+    def create_from_graph(self, graph: Graph):
+        for vertex, neighbors in graph.edges.items():
+            self.edges[vertex] = neighbors
+        self.name = graph.name
+    
+    def check_isomorphism(self, graph: Graph):
+        degrees = sorted([len(details.neighbors) for details in graph.edges.values()])
+        iso_degrees = sorted([len(neighbors) for neighbors in self.edges.values()])
+        if degrees != iso_degrees:
+            return False
+        
+        vertices = self.edges.keys()
+        for perm in permutations(graph.edges.keys()):
+            mapping = dict(zip(vertices, perm))
+            if all(
+                set(self.edges[v1]) == set(mapping[v2] for v2 in graph.edges[mapping[v1]].neighbors)
+                for v1 in vertices
+            ):
+                return True
+        return False

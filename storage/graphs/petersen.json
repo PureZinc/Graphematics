@@ -1,0 +1,122 @@
+{
+    "P0nArKV5": {
+        "neighbors": [
+            "WFix4mM3",
+            "3QYVPA2i",
+            "R7HRDswK"
+        ],
+        "position": [
+            302.0,
+            202.0
+        ],
+        "labels": []
+    },
+    "RJEe3HBJ": {
+        "neighbors": [
+            "3QYVPA2i",
+            "AyFinijR",
+            "clsxSaMj"
+        ],
+        "position": [
+            267.45084971874735,
+            249.55282581475768
+        ],
+        "labels": []
+    },
+    "WFix4mM3": {
+        "neighbors": [
+            "P0nArKV5",
+            "AyFinijR",
+            "FM3VBfVk"
+        ],
+        "position": [
+            211.54915028125265,
+            231.38926261462365
+        ],
+        "labels": []
+    },
+    "3QYVPA2i": {
+        "neighbors": [
+            "RJEe3HBJ",
+            "P0nArKV5",
+            "tAzs4QAj"
+        ],
+        "position": [
+            211.54915028125262,
+            172.61073738537635
+        ],
+        "labels": []
+    },
+    "AyFinijR": {
+        "neighbors": [
+            "WFix4mM3",
+            "RJEe3HBJ",
+            "aWKvnG4F"
+        ],
+        "position": [
+            267.45084971874735,
+            154.44717418524232
+        ],
+        "labels": []
+    },
+    "R7HRDswK": {
+        "neighbors": [
+            "clsxSaMj",
+            "aWKvnG4F",
+            "P0nArKV5"
+        ],
+        "position": [
+            352.0,
+            202.0
+        ],
+        "labels": []
+    },
+    "clsxSaMj": {
+        "neighbors": [
+            "R7HRDswK",
+            "FM3VBfVk",
+            "RJEe3HBJ"
+        ],
+        "position": [
+            282.90169943749476,
+            297.10565162951536
+        ],
+        "labels": []
+    },
+    "FM3VBfVk": {
+        "neighbors": [
+            "clsxSaMj",
+            "tAzs4QAj",
+            "WFix4mM3"
+        ],
+        "position": [
+            171.09830056250527,
+            260.7785252292473
+        ],
+        "labels": []
+    },
+    "tAzs4QAj": {
+        "neighbors": [
+            "FM3VBfVk",
+            "aWKvnG4F",
+            "3QYVPA2i"
+        ],
+        "position": [
+            171.09830056250524,
+            143.2214747707527
+        ],
+        "labels": []
+    },
+    "aWKvnG4F": {
+        "neighbors": [
+            "tAzs4QAj",
+            "R7HRDswK",
+            "AyFinijR"
+        ],
+        "position": [
+            282.9016994374947,
+            106.89434837048464
+        ],
+        "labels": []
+    }
+}

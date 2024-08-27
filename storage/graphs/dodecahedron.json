@@ -1,0 +1,242 @@
+{
+    "fapGk8jV": {
+        "neighbors": [
+            "Vuqo37VU",
+            "Bhx0Yt2K",
+            "WRdvKa25"
+        ],
+        "position": [
+            285,
+            202
+        ],
+        "labels": []
+    },
+    "oKEXvXsl": {
+        "neighbors": [
+            "sp36KNWX",
+            "oh9wF4ox",
+            "uMol4WIX"
+        ],
+        "position": [
+            376,
+            299
+        ],
+        "labels": []
+    },
+    "Vuqo37VU": {
+        "neighbors": [
+            "fapGk8jV",
+            "ea078JWE",
+            "sfQSfL8V"
+        ],
+        "position": [
+            262,
+            234
+        ],
+        "labels": []
+    },
+    "sp36KNWX": {
+        "neighbors": [
+            "oKEXvXsl",
+            "tTdUfvXZ",
+            "PfCLtmG9"
+        ],
+        "position": [
+            199,
+            341
+        ],
+        "labels": []
+    },
+    "ea078JWE": {
+        "neighbors": [
+            "Vuqo37VU",
+            "nM2Jk8ui",
+            "XUlR1119"
+        ],
+        "position": [
+            219,
+            219
+        ],
+        "labels": []
+    },
+    "tTdUfvXZ": {
+        "neighbors": [
+            "sp36KNWX",
+            "isLXCelj",
+            "TScJrniO"
+        ],
+        "position": [
+            93,
+            202
+        ],
+        "labels": []
+    },
+    "nM2Jk8ui": {
+        "neighbors": [
+            "ea078JWE",
+            "Bhx0Yt2K",
+            "7WFE0PYU"
+        ],
+        "position": [
+            227,
+            182
+        ],
+        "labels": []
+    },
+    "isLXCelj": {
+        "neighbors": [
+            "tTdUfvXZ",
+            "oh9wF4ox",
+            "GLKiai1h"
+        ],
+        "position": [
+            196,
+            64
+        ],
+        "labels": []
+    },
+    "Bhx0Yt2K": {
+        "neighbors": [
+            "nM2Jk8ui",
+            "fapGk8jV",
+            "SBRwDds2"
+        ],
+        "position": [
+            259,
+            168
+        ],
+        "labels": []
+    },
+    "oh9wF4ox": {
+        "neighbors": [
+            "isLXCelj",
+            "oKEXvXsl",
+            "zvPmEoFu"
+        ],
+        "position": [
+            381,
+            115
+        ],
+        "labels": []
+    },
+    "WRdvKa25": {
+        "neighbors": [
+            "uMol4WIX",
+            "zvPmEoFu",
+            "fapGk8jV"
+        ],
+        "position": [
+            328,
+            203
+        ],
+        "labels": []
+    },
+    "uMol4WIX": {
+        "neighbors": [
+            "WRdvKa25",
+            "sfQSfL8V",
+            "oKEXvXsl"
+        ],
+        "position": [
+            332.90169943749476,
+            260.7785252292473
+        ],
+        "labels": []
+    },
+    "sfQSfL8V": {
+        "neighbors": [
+            "uMol4WIX",
+            "PfCLtmG9",
+            "Vuqo37VU"
+        ],
+        "position": [
+            272,
+            270
+        ],
+        "labels": []
+    },
+    "PfCLtmG9": {
+        "neighbors": [
+            "sfQSfL8V",
+            "XUlR1119",
+            "sp36KNWX"
+        ],
+        "position": [
+            221.09830056250527,
+            297.10565162951536
+        ],
+        "labels": []
+    },
+    "XUlR1119": {
+        "neighbors": [
+            "PfCLtmG9",
+            "TScJrniO",
+            "ea078JWE"
+        ],
+        "position": [
+            192,
+            247
+        ],
+        "labels": []
+    },
+    "TScJrniO": {
+        "neighbors": [
+            "XUlR1119",
+            "7WFE0PYU",
+            "tTdUfvXZ"
+        ],
+        "position": [
+            152.0,
+            202.0
+        ],
+        "labels": []
+    },
+    "7WFE0PYU": {
+        "neighbors": [
+            "TScJrniO",
+            "GLKiai1h",
+            "nM2Jk8ui"
+        ],
+        "position": [
+            189,
+            158
+        ],
+        "labels": []
+    },
+    "GLKiai1h": {
+        "neighbors": [
+            "7WFE0PYU",
+            "SBRwDds2",
+            "isLXCelj"
+        ],
+        "position": [
+            221.09830056250524,
+            106.89434837048465
+        ],
+        "labels": []
+    },
+    "SBRwDds2": {
+        "neighbors": [
+            "GLKiai1h",
+            "zvPmEoFu",
+            "Bhx0Yt2K"
+        ],
+        "position": [
+            274,
+            135
+        ],
+        "labels": []
+    },
+    "zvPmEoFu": {
+        "neighbors": [
+            "SBRwDds2",
+            "WRdvKa25",
+            "oh9wF4ox"
+        ],
+        "position": [
+            332.9016994374947,
+            143.22147477075265
+        ],
+        "labels": []
+    }
+}
